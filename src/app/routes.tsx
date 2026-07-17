@@ -7,6 +7,8 @@ import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Scan from "./pages/Scan";
 import ProductDetail from "./pages/ProductDetail";
+import Products from "./pages/Products";
+import BrandRanking from "./pages/BrandRanking";
 
 export const router = createBrowserRouter([
   {
@@ -40,5 +42,13 @@ export const router = createBrowserRouter([
   {
     path: "/product/:id",
     Component: ProductDetail,
+  },
+  {
+    path: "/products",
+    Component: Products,
+  },
+  {
+    path: "/brands",
+    Component: BrandRanking,
   },
 ]);

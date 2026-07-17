@@ -5,7 +5,7 @@ export default function Onboarding3() {
   const navigate = useNavigate();
 
   return (
-    <MobileFrame bg="#ffffff">
+    <MobileFrame bg="#FAFCFF">
       {/* Top spacer — no skip on last screen, replaced with confetti feel */}
       <div className="flex justify-end px-6 pt-4 pb-0 shrink-0" style={{ minHeight: "36px" }} />
 

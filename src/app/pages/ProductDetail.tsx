@@ -209,7 +209,7 @@ export default function ProductDetail() {
   const [nutritionOpen, setNutritionOpen] = useState(false);
 
   return (
-    <MobileFrame bg="#F5F7FA">
+    <MobileFrame bg="#F5F7FA" topColor="#2ECC71" lightStatusBar>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
         {/* ════════ TOP BAR (GREEN) ════════ */}
@@ -912,6 +912,7 @@ export default function ProductDetail() {
 
                       {/* View button */}
                       <button
+                        onClick={() => navigate(`/product/${alt.id}`)}
                         style={{
                           width: "100%", height: "28px", borderRadius: "8px",
                           background: "#2ECC71", border: "none", cursor: "pointer",

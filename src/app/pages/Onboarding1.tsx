@@ -5,12 +5,12 @@ export default function Onboarding1() {
   const navigate = useNavigate();
 
   return (
-    <MobileFrame bg="#ffffff">
+    <MobileFrame bg="#FAFCFF">
       {/* Skip button */}
       <div className="flex justify-end px-6 pt-4 pb-0 shrink-0">
         <button
           onClick={() => navigate("/auth")}
-          style={{ color: "#9CA3AF", fontSize: "15px", fontWeight: 500, background: "none", border: "none", cursor: "pointer", padding: "4px 0" }}
+          style={{ color: "#9CA3AF", fontSize: "14px", fontWeight: 600, background: "#F3F4F6", border: "none", cursor: "pointer", padding: "5px 14px", borderRadius: "20px" }}
         >
           Skip
         </button>

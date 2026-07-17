@@ -168,7 +168,7 @@ export default function Scan() {
   const FRAME_H = 180;
 
   return (
-    <MobileFrame bg="#0A0A0A">
+    <MobileFrame bg="#0A0A0A" topColor="#0A0A0A" lightStatusBar>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
 
         {/* ════════ CAMERA BACKGROUND ════════ */}

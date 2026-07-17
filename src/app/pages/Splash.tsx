@@ -33,15 +33,15 @@ export default function Splash() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen w-full flex items-center justify-center" style={{ background: "radial-gradient(ellipse at 30% 20%, #1e3a5f 0%, #0f1923 45%, #0a0a14 100%)" }}>
       <div
         className="relative overflow-hidden flex flex-col items-center justify-between"
         style={{
           width: "375px",
           height: "812px",
           background: "linear-gradient(160deg, #34D979 0%, #2ECC71 45%, #27AE60 100%)",
-          borderRadius: "40px",
-          boxShadow: "0 40px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)",
+          borderRadius: "42px",
+          boxShadow: "0 60px 120px rgba(0,0,0,0.7), 0 0 0 8px #1e1e1e, 0 0 0 10px rgba(255,255,255,0.06)",
         }}
       >
         {/* Decorative circles */}

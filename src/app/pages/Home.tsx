@@ -16,6 +16,7 @@ import {
   Zap,
   Sunrise,
   Star,
+  Award,
 } from "lucide-react";
 import { MobileFrame } from "../components/MobileFrame";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -113,6 +114,13 @@ const NAV_TABS = [
   { id: "profile", label: "Profile", Icon: User },
 ];
 
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
+
 // ── Score badge ───────────────────────────────────────────────────────────────
 function ScoreBadge({ score }: { score: number }) {
   const color = score >= 75 ? "#2ECC71" : score >= 50 ? "#F59E0B" : "#EF4444";
@@ -141,14 +149,13 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <MobileFrame bg="#F5F7FA">
-      {/* ── STATUS BAR color fix: white text on green ── */}
+    <MobileFrame bg="#F5F7FA" topColor="#2ECC71" lightStatusBar>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
         {/* ════════════════════ HEADER ════════════════════ */}
         <div
           style={{
-            background: "linear-gradient(135deg, #2ECC71 0%, #1BAB58 100%)",
+            background: "linear-gradient(150deg, #34D06A 0%, #2ECC71 40%, #27AE60 100%)",
             padding: "0 20px 0",
             flexShrink: 0,
           }}
@@ -156,14 +163,14 @@ export default function Home() {
           {/* Top row */}
           <div
             className="flex items-center justify-between"
-            style={{ paddingBottom: "14px", paddingTop: "6px" }}
+            style={{ paddingBottom: "10px", paddingTop: "4px" }}
           >
             {/* Hamburger */}
             <button
               style={{
                 width: "38px",
                 height: "38px",
-                borderRadius: "10px",
+                borderRadius: "11px",
                 background: "rgba(255,255,255,0.18)",
                 display: "flex",
                 alignItems: "center",
@@ -175,34 +182,38 @@ export default function Home() {
               <Menu size={20} color="white" />
             </button>
 
-            {/* App name */}
-            <div className="flex items-center gap-1.5">
-              <div
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "8px",
-                  background: "rgba(255,255,255,0.25)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <ScanLine size={16} color="white" />
+            {/* Greeting + app name */}
+            <div style={{ textAlign: "center" }}>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "11px", fontWeight: 500, letterSpacing: "0.2px" }}>
+                {getGreeting()}, Priya 👋
+              </p>
+              <div className="flex items-center gap-1.5" style={{ justifyContent: "center" }}>
+                <div
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    borderRadius: "7px",
+                    background: "rgba(255,255,255,0.25)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ScanLine size={13} color="white" />
+                </div>
+                <span style={{ color: "white", fontSize: "18px", fontWeight: 800, letterSpacing: "-0.4px" }}>
+                  SafeBite
+                </span>
               </div>
-              <span style={{ color: "white", fontSize: "20px", fontWeight: 800, letterSpacing: "-0.3px" }}>
-                SafeBite
-              </span>
             </div>
 
             {/* Right icons */}
             <div className="flex items-center gap-2">
-              {/* Notification bell */}
               <button
                 style={{
                   width: "38px",
                   height: "38px",
-                  borderRadius: "10px",
+                  borderRadius: "11px",
                   background: "rgba(255,255,255,0.18)",
                   display: "flex",
                   alignItems: "center",
@@ -213,31 +224,29 @@ export default function Home() {
                 }}
               >
                 <Bell size={18} color="white" />
-                {/* Badge dot */}
                 <span
                   style={{
                     position: "absolute",
-                    top: "7px",
-                    right: "8px",
+                    top: "8px",
+                    right: "9px",
                     width: "7px",
                     height: "7px",
                     borderRadius: "50%",
                     background: "#FF4757",
-                    border: "1.5px solid #1BAB58",
+                    border: "1.5px solid #27AE60",
                   }}
                 />
               </button>
 
-              {/* Avatar */}
               <div
                 style={{
                   width: "36px",
                   height: "36px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "2px solid rgba(255,255,255,0.5)",
+                  border: "2px solid rgba(255,255,255,0.45)",
                   flexShrink: 0,
-                  background: "rgba(255,255,255,0.3)",
+                  background: "rgba(255,255,255,0.25)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -248,7 +257,42 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── Search bar (sits on green, bleeds into white) ── */}
+          {/* ── Health streak pill ── */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "18px",
+              marginBottom: "16px",
+            }}
+          >
+            {[
+              { label: "Scans Today", value: "4", icon: "📷" },
+              { label: "Avg Score", value: "76", icon: "⭐" },
+              { label: "Avoided", value: "2", icon: "🚫" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "rgba(255,255,255,0.14)",
+                  borderRadius: "20px",
+                  padding: "5px 10px 5px 8px",
+                }}
+              >
+                <span style={{ fontSize: "13px" }}>{stat.icon}</span>
+                <div>
+                  <p style={{ color: "white", fontSize: "13px", fontWeight: 800, lineHeight: 1 }}>{stat.value}</p>
+                  <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "9px", fontWeight: 500, lineHeight: 1.2 }}>{stat.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Search bar (bleeds into content) ── */}
           <div
             style={{
               background: "white",
@@ -259,8 +303,10 @@ export default function Home() {
               padding: "0 14px",
               height: "46px",
               marginBottom: "-20px",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.10)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+              cursor: "pointer",
             }}
+            onClick={() => navigate("/products")}
           >
             <Search size={17} color="#9CA3AF" />
             <input
@@ -274,8 +320,24 @@ export default function Home() {
                 fontSize: "13px",
                 color: "#374151",
                 background: "transparent",
+                cursor: "pointer",
               }}
+              readOnly
             />
+            <div
+              style={{
+                background: "#2ECC71",
+                borderRadius: "8px",
+                width: "28px",
+                height: "28px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <Search size={13} color="white" />
+            </div>
           </div>
         </div>
 
@@ -283,90 +345,73 @@ export default function Home() {
         <div style={{ flex: 1, overflowY: "auto", paddingTop: "30px" }}>
 
           {/* ── SCAN BUTTON CARD ── */}
-          <div style={{ padding: "0 18px", marginBottom: "22px" }}>
+          <div style={{ padding: "0 18px", marginBottom: "24px" }}>
             <div
+              onClick={() => navigate("/scan")}
               style={{
-                background: "linear-gradient(135deg, #2ECC71 0%, #1BAB58 60%, #159B48 100%)",
-                borderRadius: "20px",
+                background: "linear-gradient(135deg, #2ECC71 0%, #1BAB58 60%, #138F44 100%)",
+                borderRadius: "22px",
                 padding: "22px 24px",
                 display: "flex",
                 alignItems: "center",
                 gap: "18px",
-                boxShadow: "0 8px 28px rgba(46,204,113,0.38)",
+                boxShadow: "0 10px 32px rgba(46,204,113,0.40)",
                 cursor: "pointer",
                 position: "relative",
                 overflow: "hidden",
               }}
             >
               {/* Decorative circles */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-20px",
-                  right: "-20px",
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.08)",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-30px",
-                  right: "30px",
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.06)",
-                }}
-              />
+              <div style={{ position: "absolute", top: "-20px", right: "-20px", width: "110px", height: "110px", borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+              <div style={{ position: "absolute", bottom: "-30px", right: "40px", width: "80px", height: "80px", borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
 
               {/* Icon */}
               <div
                 style={{
-                  width: "68px",
-                  height: "68px",
-                  borderRadius: "18px",
-                  background: "rgba(255,255,255,0.2)",
+                  width: "70px",
+                  height: "70px",
+                  borderRadius: "20px",
+                  background: "rgba(255,255,255,0.22)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
                   backdropFilter: "blur(4px)",
+                  boxShadow: "inset 0 1px 1px rgba(255,255,255,0.25)",
                 }}
               >
-                <ScanLine size={36} color="white" strokeWidth={1.8} />
+                <ScanLine size={36} color="white" strokeWidth={1.7} />
               </div>
 
               {/* Text */}
               <div>
-                <p style={{ color: "white", fontSize: "20px", fontWeight: 800, lineHeight: 1.2 }}>
-                  Scan Product
+                <p style={{ color: "white", fontSize: "20px", fontWeight: 800, lineHeight: 1.15 }}>
+                  Scan a Product
                 </p>
-                <p style={{ color: "rgba(255,255,255,0.80)", fontSize: "13px", marginTop: "4px" }}>
-                  Check if it's safe to eat
+                <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "13px", marginTop: "5px", lineHeight: 1.4 }}>
+                  Get instant health analysis
                 </p>
                 <div
                   style={{
-                    marginTop: "12px",
+                    marginTop: "13px",
                     background: "rgba(255,255,255,0.22)",
                     borderRadius: "8px",
-                    padding: "5px 12px",
+                    padding: "5px 13px",
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "5px",
+                    border: "1px solid rgba(255,255,255,0.18)",
                   }}
                 >
                   <span style={{ color: "white", fontSize: "12px", fontWeight: 600 }}>Tap to scan</span>
-                  <ChevronRight size={13} color="white" />
+                  <ChevronRight size={12} color="white" />
                 </div>
               </div>
             </div>
           </div>
 
           {/* ── TODAY'S HEALTHY PICKS ── */}
-          <div style={{ marginBottom: "22px" }}>
+          <div style={{ marginBottom: "24px" }}>
             <div
               className="flex items-center justify-between"
               style={{ padding: "0 18px", marginBottom: "12px" }}
@@ -375,6 +420,7 @@ export default function Home() {
                 Today's Healthy Picks
               </p>
               <button
+                onClick={() => navigate("/products")}
                 style={{
                   fontSize: "13px",
                   color: "#2ECC71",
@@ -391,7 +437,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Horizontal scroll */}
             <div
               style={{
                 display: "flex",
@@ -406,35 +451,28 @@ export default function Home() {
               {HEALTHY_PICKS.map((item) => (
                 <div
                   key={item.id}
+                  onClick={() => navigate(`/product/${item.id}`)}
                   style={{
                     minWidth: "140px",
                     background: "white",
                     borderRadius: "16px",
                     overflow: "hidden",
-                    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+                    boxShadow: "0 2px 14px rgba(0,0,0,0.08)",
                     flexShrink: 0,
                     cursor: "pointer",
+                    border: "1px solid rgba(0,0,0,0.04)",
                   }}
                 >
-                  {/* Image */}
                   <div style={{ width: "100%", height: "100px", overflow: "hidden", position: "relative" }}>
                     <ImageWithFallback
                       src={item.image}
                       alt={item.name}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
-                    {/* Score badge overlay */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "8px",
-                        right: "8px",
-                      }}
-                    >
+                    <div style={{ position: "absolute", top: "8px", right: "8px" }}>
                       <ScoreBadge score={item.score} />
                     </div>
                   </div>
-                  {/* Info */}
                   <div style={{ padding: "10px 10px 12px" }}>
                     <p
                       style={{
@@ -458,14 +496,54 @@ export default function Home() {
             </div>
           </div>
 
+          {/* ── BRAND RANKING CTA ── */}
+          <div style={{ padding: "0 18px", marginBottom: "24px" }}>
+            <div
+              onClick={() => navigate("/brands")}
+              style={{
+                background: "linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%)",
+                borderRadius: "18px",
+                padding: "16px 18px",
+                display: "flex",
+                alignItems: "center",
+                gap: "14px",
+                cursor: "pointer",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <div style={{ position: "absolute", right: "-10px", top: "-10px", width: "90px", height: "90px", borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "13px",
+                  background: "rgba(255,255,255,0.14)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Award size={22} color="#FFD700" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ color: "white", fontSize: "15px", fontWeight: 800, marginBottom: "3px" }}>Brand Health Rankings</p>
+                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "12px" }}>See which brands to trust</p>
+              </div>
+              <ChevronRight size={18} color="rgba(255,255,255,0.5)" />
+            </div>
+          </div>
+
           {/* ── CATEGORIES ── */}
-          <div style={{ padding: "0 18px", marginBottom: "22px" }}>
+          <div style={{ padding: "0 18px", marginBottom: "24px" }}>
             <div
               className="flex items-center justify-between"
               style={{ marginBottom: "12px" }}
             >
               <p style={{ fontSize: "16px", fontWeight: 700, color: "#111827" }}>Categories</p>
               <button
+                onClick={() => navigate("/products")}
                 style={{
                   fontSize: "13px",
                   color: "#2ECC71",
@@ -492,6 +570,7 @@ export default function Home() {
               {CATEGORIES.map(({ id, label, Icon, color, iconColor }) => (
                 <button
                   key={id}
+                  onClick={() => navigate("/products")}
                   style={{
                     background: "white",
                     borderRadius: "14px",
@@ -500,9 +579,9 @@ export default function Home() {
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "8px",
-                    border: "none",
+                    border: "1px solid rgba(0,0,0,0.04)",
                     cursor: "pointer",
-                    boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
+                    boxShadow: "0 1px 8px rgba(0,0,0,0.06)",
                   }}
                 >
                   <div
@@ -525,7 +604,7 @@ export default function Home() {
           </div>
 
           {/* ── RECENTLY SCANNED ── */}
-          <div style={{ padding: "0 18px", paddingBottom: "20px" }}>
+          <div style={{ padding: "0 18px", paddingBottom: "28px" }}>
             <div
               className="flex items-center justify-between"
               style={{ marginBottom: "12px" }}
@@ -534,6 +613,7 @@ export default function Home() {
                 Recently Scanned
               </p>
               <button
+                onClick={() => navigate("/products")}
                 style={{
                   fontSize: "13px",
                   color: "#2ECC71",
@@ -554,6 +634,7 @@ export default function Home() {
               {RECENT_SCANS.map((item) => (
                 <div
                   key={item.id}
+                  onClick={() => navigate(`/product/${item.id}`)}
                   style={{
                     background: "white",
                     borderRadius: "14px",
@@ -561,11 +642,11 @@ export default function Home() {
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
+                    boxShadow: "0 1px 8px rgba(0,0,0,0.06)",
                     cursor: "pointer",
+                    border: "1px solid rgba(0,0,0,0.04)",
                   }}
                 >
-                  {/* Thumbnail */}
                   <div
                     style={{
                       width: "52px",
@@ -583,7 +664,6 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p
                       style={{
@@ -600,7 +680,6 @@ export default function Home() {
                     <p style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "2px" }}>{item.brand}</p>
                   </div>
 
-                  {/* Score badge */}
                   <div style={{ flexShrink: 0, textAlign: "center" }}>
                     <div
                       style={{
@@ -614,16 +693,12 @@ export default function Home() {
                         {item.score}
                       </span>
                     </div>
-                    <span
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: 600,
-                        color: item.scoreColor,
-                      }}
-                    >
+                    <span style={{ fontSize: "10px", fontWeight: 600, color: item.scoreColor }}>
                       {item.label}
                     </span>
                   </div>
+
+                  <ChevronRight size={14} color="#D1D5DB" />
                 </div>
               ))}
             </div>
@@ -635,13 +710,13 @@ export default function Home() {
           style={{
             flexShrink: 0,
             background: "white",
-            borderTop: "1px solid #F3F4F6",
-            paddingBottom: "20px",
+            borderTop: "1px solid #F0F0F0",
+            paddingBottom: "22px",
             paddingTop: "6px",
             display: "flex",
             justifyContent: "space-around",
             alignItems: "flex-end",
-            boxShadow: "0 -4px 20px rgba(0,0,0,0.05)",
+            boxShadow: "0 -6px 24px rgba(0,0,0,0.06)",
           }}
         >
           {NAV_TABS.map((tab) => {
@@ -653,6 +728,8 @@ export default function Home() {
                 onClick={() => {
                   if (tab.id === "scan") {
                     navigate("/scan");
+                  } else if (tab.id === "search") {
+                    navigate("/products");
                   } else {
                     setActiveTab(tab.id);
                   }
@@ -673,16 +750,14 @@ export default function Home() {
                 {isCenter ? (
                   <div
                     style={{
-                      width: "52px",
-                      height: "52px",
-                      borderRadius: "16px",
-                      background: isActive
-                        ? "linear-gradient(135deg, #2ECC71 0%, #1BAB58 100%)"
-                        : "linear-gradient(135deg, #2ECC71 0%, #1BAB58 100%)",
+                      width: "54px",
+                      height: "54px",
+                      borderRadius: "18px",
+                      background: "linear-gradient(135deg, #2ECC71 0%, #1BAB58 100%)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      boxShadow: "0 6px 18px rgba(46,204,113,0.40)",
+                      boxShadow: "0 6px 20px rgba(46,204,113,0.45)",
                       marginBottom: "4px",
                     }}
                   >
@@ -691,12 +766,12 @@ export default function Home() {
                 ) : (
                   <div
                     style={{
-                      width: "28px",
-                      height: "28px",
+                      width: "30px",
+                      height: "30px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      borderRadius: "8px",
+                      borderRadius: "9px",
                       background: isActive ? "#E8FAF0" : "transparent",
                       transition: "background 0.15s",
                     }}

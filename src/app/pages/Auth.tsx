@@ -9,7 +9,7 @@ export default function Auth() {
   const navigate = useNavigate();
 
   return (
-    <MobileFrame bg="#ffffff">
+    <MobileFrame bg="#FAFCFF">
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* ── Header ── */}
         <div
